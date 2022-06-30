@@ -1,6 +1,7 @@
 import GlobalStyles from "./globalStyles"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
+import Home from "./components/Home"
 
 import TokenContext from "./contexts/TokenContext";
 
@@ -19,6 +20,7 @@ export default function App(){
           <Routes>
             <Route path="/" element={<SignIn />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
+            <Route path="/home" element={<Home />}></Route>
           </Routes>
         </BrowserRouter>
       </TokenContext.Provider>  
