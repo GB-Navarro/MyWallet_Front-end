@@ -8,6 +8,9 @@ import {
     Button,
     Text,
   } from "./styles";
+
+  import { Link } from "react-router-dom";
+
   export default function SignIn () {
     return (
       <>
@@ -22,7 +25,9 @@ import {
               <Button> Entrar </Button>
             </ColumnBox>
             <RowBox>
-              <Text> Primeira vez? Cadastre-se! </Text>
+              <Link to="/signup">
+                <Text> Primeira vez? Cadastre-se! </Text>
+              </Link>
             </RowBox>
           </Container>
         </Main>
