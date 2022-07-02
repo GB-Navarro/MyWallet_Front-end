@@ -21,8 +21,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
 
-  let { token, setToken } = useContext(TokenContext);
-  let { name, setName } = useContext(NameContext);
+  let { setToken } = useContext(TokenContext);
+  let { setName } = useContext(NameContext);
 
   let navigate = useNavigate();
   let [email, setEmail] = useState("");
@@ -81,11 +81,9 @@ export default function SignIn() {
     let isLoginSuccessful;
     try{
       let response = await axios.post(URL, userData);
-      console.log("response",response);
       if(response.status === 200){
         setToken(response.data.token);
         setName(response.data.name);
-        console.log("name/token", name, token);
         isLoginSuccessful = true;
         return isLoginSuccessful;
       }else{
