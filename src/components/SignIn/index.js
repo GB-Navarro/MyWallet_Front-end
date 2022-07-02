@@ -8,14 +8,21 @@ import {
   Button,
   Text,
 } from "./styles";
+import TokenContext from "./../../contexts/TokenContext.js";
+import NameContext from "./../../contexts/NameContext.js";
+
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 export default function SignIn() {
+
+  let { token, setToken } = useContext(TokenContext);
+  let { name, setName } = useContext(NameContext);
 
   let navigate = useNavigate();
   let [email, setEmail] = useState("");
@@ -74,7 +81,11 @@ export default function SignIn() {
     let isLoginSuccessful;
     try{
       let response = await axios.post(URL, userData);
+      console.log("response",response);
       if(response.status === 200){
+        setToken(response.data.token);
+        setName(response.data.name);
+        console.log("name/token", name, token);
         isLoginSuccessful = true;
         return isLoginSuccessful;
       }else{
