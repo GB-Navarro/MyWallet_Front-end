@@ -19,9 +19,11 @@ export const RowBox = styled.div`
 `;
 
 export const ColumnBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Input = styled.input`
