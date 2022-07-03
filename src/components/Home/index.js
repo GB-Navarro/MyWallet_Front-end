@@ -34,7 +34,7 @@ export default function Home() {
   let { token } = useContext(TokenContext);
   let { name } = useContext(NameContext);
   let { entryExit, setEntryExit } = useContext(EntryExitContext);
-  let {userEntries, setUserEntries} = useContext(UserEntriesContext);
+  let { userEntries, setUserEntries } = useContext(UserEntriesContext);
 
   let [balance, setBalance] = useState(0);
 
@@ -46,12 +46,13 @@ export default function Home() {
   useEffect(() => {
     const promisse = axios.get("http://localhost:5000/entry", config);
     promisse.then((response) => {
-      setUserEntries(response.data);
-    })
+      setUserEntries(response.data.userEntries);
+      setBalance(response.data.balance);
+      console.log("response", response.data);
+    });
     promisse.catch((error) => {
       console.log("deu ruim", error);
-    })
-   
+    });
   }, []);
 
   return (
@@ -66,33 +67,41 @@ export default function Home() {
       </Header>
       <Main>
         <Records>
-          {userEntries.length > 0 ? (
-            <>
-              <RecordBox>
-                {userEntries.map((userEntrie) => {
-                  return (
-                    <>
-                      <Record
-                        date={userEntrie.date}
-                        description={userEntrie.description}
-                        value={userEntrie.value}
-                        type={entryExit}
-                      ></Record>
-                    </>
-                  );
-                })}
-              </RecordBox>
-              <BalanceContainer>
-                <BalanceBox>
-                  <Balance>
-                    <h1>SALDO</h1>
-                  </Balance>
-                  <Balance>
-                    <p>100</p>
-                  </Balance>
-                </BalanceBox>
-              </BalanceContainer>
-            </>
+          {userEntries != undefined ? (
+            userEntries.length > 0 ? (
+              <>
+                <RecordBox>
+                  {userEntries.map((userEntrie) => {
+                    return (
+                      <>
+                        <Record
+                          date={userEntrie.date}
+                          description={userEntrie.description}
+                          value={userEntrie.value}
+                          type={entryExit}
+                        ></Record>
+                      </>
+                    );
+                  })}
+                </RecordBox>
+                <BalanceContainer>
+                  <BalanceBox>
+                    <Balance>
+                      <h1>SALDO</h1>
+                    </Balance>
+                    <Balance>
+                      <p>{balance}</p>
+                    </Balance>
+                  </BalanceBox>
+                </BalanceContainer>
+              </>
+            ) : (
+              <>
+                <TextBox>
+                  <Text>Não há registros de entrada ou saída </Text>
+                </TextBox>
+              </>
+            )
           ) : (
             <>
               <TextBox>
@@ -140,8 +149,6 @@ export default function Home() {
   }
 }
 
-//ajeitar o problema do saldo
-//ajeitar a hora que o getentrys deve ser chamado (ao fazer login e ao inserir uma entrada/saida)
 //fazer os ajustes finos do layout (ajustar a styled props das cores das entradas/saídas)
 //arquiteturar o back e o front end
 //fazer o deploy do back end e do banco de dados
