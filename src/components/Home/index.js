@@ -30,7 +30,7 @@ export default function Home() {
     <>
       <Header>
         <Name onClick={() => getUserEntries()}> Olá, {name} </Name>
-        <Icon>
+        <Icon onClick={() => dropSession()}>
           <ion-icon name="exit-outline"></ion-icon>
         </Icon>
       </Header>
@@ -75,6 +75,16 @@ export default function Home() {
     console.log(response);
     setUserEntries(response.data);
     console.log(userEntries);
+  }
+
+  async function dropSession(){
+    try{
+      const response = await axios.delete("http://localhost:5000/home", config);
+      navigate("/");
+    }catch(error){
+      console.log("Ocorreu um erro ao deslogar o usuário", error);
+    }
+    
   }
 }
 
