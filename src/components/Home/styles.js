@@ -51,20 +51,21 @@ export const Button = styled.button`
 `;
 
 export const Box = styled.div`
-  margin: 0px 12px 0px 12px;
 `;
 
 export const Buttons = styled.section`
   width: 100vw;
   height: 20vh;
   margin-bottom: 50px;
+  display:flex;
+  justify-content: center;
 `;
 
 export const Container = styled.div`
-  width: 100%;
+  width: 90%;
   height: 100%;
-  display: flex;
-  justify-content: center;
+  display:flex;
+  justify-content: space-between;
 `;
 
 export const Date = styled.p`
@@ -113,4 +114,35 @@ export const RecordBox = styled.div`
   display:flex;
   flex-direction: column;
   background-color: #FFFFFF;
+`
+
+export const Balance = styled.div`
+  h1{
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    background-color: #FFFFFF;
+  }
+  p{
+    font-family: "Raleway", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    background-color: #FFFFFF;
+  }
+  padding-right: 127px;
+  background-color: #FFFFFF;
+`
+
+export const BalanceContainer = styled.section`
+  display:flex;
+  justify-content: flex-start;
+  margin: 0px 15px 0px 5px;
+  background-color: #FFFFFF;
+`
+
+export const BalanceBox = styled.div`
+  display:flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  margin-right: 40px;
 `

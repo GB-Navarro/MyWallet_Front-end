@@ -15,6 +15,9 @@ import {
   Text,
   TextBox,
   RecordBox,
+  Balance,
+  BalanceBox,
+  BalanceContainer,
 } from "./styles";
 import axios from "axios";
 import { useState } from "react";
@@ -34,6 +37,7 @@ export default function Home() {
   let { entryExit, setEntryExit } = useContext(EntryExitContext);
 
   let [userEntries, setUserEntries] = useState([]);
+  let [balance, setBalance] = useState(0);
 
   const config = {
     headers: {
@@ -44,29 +48,41 @@ export default function Home() {
   return (
     <>
       <Header>
-        <Name onClick={() => getUserEntries()}> Olá, {name} </Name>
-        <Icon onClick={() => dropSession()}>
-          <ion-icon name="exit-outline"></ion-icon>
-        </Icon>
+        <Container>
+          <Name onClick={() => getUserEntries()}> Olá, {name} </Name>
+          <Icon onClick={() => dropSession()}>
+            <ion-icon name="exit-outline"></ion-icon>
+          </Icon>
+        </Container>
       </Header>
       <Main>
         <Records>
           {userEntries.length > 0 ? (
             <>
-            <RecordBox>
+              <RecordBox>
                 {userEntries.map((userEntrie) => {
                   return (
                     <>
-                        <Record
-                          date={userEntrie.date}
-                          description={userEntrie.description}
-                          value={userEntrie.value}
-                          type={entryExit}
-                        ></Record>
+                      <Record
+                        date={userEntrie.date}
+                        description={userEntrie.description}
+                        value={userEntrie.value}
+                        type={entryExit}
+                      ></Record>
                     </>
                   );
                 })}
               </RecordBox>
+              <BalanceContainer>
+                <BalanceBox>
+                  <Balance>
+                    <h1>SALDO</h1>
+                  </Balance>
+                  <Balance>
+                    <p>100</p>
+                  </Balance>
+                </BalanceBox>
+              </BalanceContainer>
             </>
           ) : (
             <>
@@ -107,9 +123,7 @@ export default function Home() {
 
   async function getUserEntries() {
     const response = await axios.get("http://localhost:5000/entry", config);
-    console.log(response);
     setUserEntries(response.data);
-    console.log(userEntries);
   }
 
   async function dropSession() {
