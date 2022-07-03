@@ -17,12 +17,14 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import EmailContext from "../../contexts/EmailContext";
 
 
 export default function SignIn() {
 
   let { setToken } = useContext(TokenContext);
   let { setName } = useContext(NameContext);
+  let { setEmailContext } = useContext(EmailContext);
 
   let navigate = useNavigate();
   let [email, setEmail] = useState("");
@@ -47,12 +49,14 @@ export default function SignIn() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               ></Input>
               <Input
                 type="password"
                 placeholder="Senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               ></Input>
               <Button> Entrar </Button>
             </form>
@@ -84,6 +88,7 @@ export default function SignIn() {
       if(response.status === 200){
         setToken(response.data.token);
         setName(response.data.name);
+        setEmailContext(email);
         isLoginSuccessful = true;
         return isLoginSuccessful;
       }else{
