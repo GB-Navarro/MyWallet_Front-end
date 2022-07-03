@@ -20,23 +20,22 @@ import {
   BalanceContainer,
 } from "./styles";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import EntryExitContext from "../../contexts/EntryExitContext";
 import TokenContext from "../../contexts/TokenContext";
-import EmailContext from "../../contexts/EmailContext";
 import NameContext from "../../contexts/NameContext";
+import UserEntriesContext from "../../contexts/UserEntriesContext";
 
 export default function Home() {
   let navigate = useNavigate();
   let { token } = useContext(TokenContext);
   let { name } = useContext(NameContext);
-  let { email } = useContext(EmailContext);
   let { entryExit, setEntryExit } = useContext(EntryExitContext);
+  let {userEntries, setUserEntries} = useContext(UserEntriesContext);
 
-  let [userEntries, setUserEntries] = useState([]);
   let [balance, setBalance] = useState(0);
 
   const config = {
@@ -44,12 +43,22 @@ export default function Home() {
       Authorization: token,
     },
   };
+  useEffect(() => {
+    const promisse = axios.get("http://localhost:5000/entry", config);
+    promisse.then((response) => {
+      setUserEntries(response.data);
+    })
+    promisse.catch((error) => {
+      console.log("deu ruim", error);
+    })
+   
+  }, []);
 
   return (
     <>
       <Header>
         <Container>
-          <Name onClick={() => getUserEntries()}> Olá, {name} </Name>
+          <Name> Olá, {name} </Name>
           <Icon onClick={() => dropSession()}>
             <ion-icon name="exit-outline"></ion-icon>
           </Icon>
@@ -121,20 +130,21 @@ export default function Home() {
     </>
   );
 
-  async function getUserEntries() {
-    const response = await axios.get("http://localhost:5000/entry", config);
-    setUserEntries(response.data);
-  }
-
   async function dropSession() {
     try {
-      const response = await axios.delete("http://localhost:5000/home", config);
+      await axios.delete("http://localhost:5000/home", config);
       navigate("/");
     } catch (error) {
       console.log("Ocorreu um erro ao deslogar o usuário", error);
     }
   }
 }
+
+//ajeitar o problema do saldo
+//ajeitar a hora que o getentrys deve ser chamado (ao fazer login e ao inserir uma entrada/saida)
+//fazer os ajustes finos do layout (ajustar a styled props das cores das entradas/saídas)
+//arquiteturar o back e o front end
+//fazer o deploy do back end e do banco de dados
 
 function Record(props) {
   return (

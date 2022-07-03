@@ -11,7 +11,6 @@ import {
 import TokenContext from "./../../contexts/TokenContext.js";
 import NameContext from "./../../contexts/NameContext.js";
 
-
 import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
@@ -73,11 +72,15 @@ export default function SignIn() {
 
   async function userLogin(event) {
     event.preventDefault()
-    let isLoginSuccessful = await sendUserLoginData();
-    if(isLoginSuccessful){
-      navigate("/home");
+    try{
+      let isLoginSuccessful = await sendUserLoginData();
+      //let isUserDataGet = await getUserEntries();
+      if(isLoginSuccessful){
+        navigate("/home");
+      }
+    }catch(error){
+      console.log(error);
     }
-
   }
 
   async function sendUserLoginData(){
