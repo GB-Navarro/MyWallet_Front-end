@@ -1,4 +1,5 @@
-import { Header, Name, Icon, Main, Records, Button, Box, Buttons, Container } from "./styles"
+import { Header, Name, Icon, Main, Records, Button, Box, Buttons, Container, Date, Description, Value, RecordContainer } from "./styles"
+import { useState } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +12,11 @@ export default function Home() {
   let navigate = useNavigate();
   let {token} = useContext(TokenContext);
   let {name} = useContext(NameContext);
-  let {setEntryExit} = useContext(EntryExitContext);
+  let { entryExit, setEntryExit} = useContext(EntryExitContext);
+
+  let [date, setDate] = useState("");
+  let [description, setDescription] = useState("");
+  let [value, setValue] = useState("");
 
   return (
     <>
@@ -22,7 +27,13 @@ export default function Home() {
         </Icon>
       </Header>
       <Main>
-        <Records></Records>
+        <Records>
+          <Record date={date} description={description} value={value} type={entryExit}></Record>
+          <Record date={date} description={description} value={value} type={entryExit}></Record>
+          <Record date={date} description={description} value={value} type={entryExit}></Record>
+          <Record date={date} description={description} value={value} type={entryExit}></Record>
+          <Record date={date} description={description} value={value} type={entryExit}></Record>
+        </Records>
       </Main>
       <Buttons>
         <Container>
@@ -43,3 +54,17 @@ export default function Home() {
     </>
   );
 }
+
+function Record(props){
+  return(
+    <>
+      <RecordContainer>
+        <Date>02/07/2022</Date>
+        <Description>Almoço com a gata</Description>
+        <Value>200</Value>
+      </RecordContainer>
+      
+    </>
+  )
+}
+
