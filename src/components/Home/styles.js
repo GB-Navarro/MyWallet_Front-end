@@ -31,11 +31,11 @@ export const Main = styled.main`
 `;
 
 export const Records = styled.section`
-  width: 87%;
+  width: 90%;
   height: 90%;
   background-color: #ffffff;
   border-radius: 5px;
-  padding-top:10px;
+  padding-top: 10px;
 `;
 
 export const Button = styled.button`
@@ -72,23 +72,45 @@ export const Date = styled.p`
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   margin: 0px 15px 0px 5px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 export const Description = styled.p`
   color: #000000;
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   margin-right: 35px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 `;
 export const Value = styled.p`
   font-family: "Raleway", sans-serif;
   font-weight: 400;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
+  color:${props => (props.type === "entry") ? "#03AC00":"#C70000"}
 `;
 
 export const RecordContainer = styled.div`
-    display:flex;
-    background-color: #FFFFFF;
-    margin-bottom: 15px;
+  display: flex;
+  background-color: #ffffff;
+  margin-bottom: 15px;
+`;
+export const Text = styled.h1`
+  background-color: white;
+  color: #868686;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+`;
+
+export const TextBox = styled.div`
+  height: 90%;
+  background-color: #FFFFFF;
+  text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const RecordBox = styled.div`
+  display:flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
 `

@@ -1,4 +1,21 @@
-import { Header, Name, Icon, Main, Records, Button, Box, Buttons, Container, Date, Description, Value, RecordContainer } from "./styles"
+import {
+  Header,
+  Name,
+  Icon,
+  Main,
+  Records,
+  Button,
+  Box,
+  Buttons,
+  Container,
+  Date,
+  Description,
+  Value,
+  RecordContainer,
+  Text,
+  TextBox,
+  RecordBox,
+} from "./styles";
 import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
@@ -9,22 +26,20 @@ import TokenContext from "../../contexts/TokenContext";
 import EmailContext from "../../contexts/EmailContext";
 import NameContext from "../../contexts/NameContext";
 
-
 export default function Home() {
-
   let navigate = useNavigate();
-  let {token} = useContext(TokenContext);
-  let {name} = useContext(NameContext);
-  let {email} = useContext(EmailContext);
-  let { entryExit, setEntryExit} = useContext(EntryExitContext);
+  let { token } = useContext(TokenContext);
+  let { name } = useContext(NameContext);
+  let { email } = useContext(EmailContext);
+  let { entryExit, setEntryExit } = useContext(EntryExitContext);
 
   let [userEntries, setUserEntries] = useState([]);
 
   const config = {
     headers: {
-        Authorization: token
-    }
-  }
+      Authorization: token,
+    },
+  };
 
   return (
     <>
@@ -36,68 +51,85 @@ export default function Home() {
       </Header>
       <Main>
         <Records>
-          {userEntries.length > 0 ? 
-          userEntries.map((userEntrie) => {
-            return (
-              <>
-                <Record date={userEntrie.date} description={userEntrie.description} value={userEntrie.value} type={entryExit}></Record>
-              </>
-            )
-          })
-          :
+          {userEntries.length > 0 ? (
             <>
-              <h1>O usuário não possui entradas</h1>
+            <RecordBox>
+                {userEntries.map((userEntrie) => {
+                  return (
+                    <>
+                        <Record
+                          date={userEntrie.date}
+                          description={userEntrie.description}
+                          value={userEntrie.value}
+                          type={entryExit}
+                        ></Record>
+                    </>
+                  );
+                })}
+              </RecordBox>
             </>
-          }
+          ) : (
+            <>
+              <TextBox>
+                <Text>Não há registros de entrada ou saída </Text>
+              </TextBox>
+            </>
+          )}
         </Records>
       </Main>
       <Buttons>
         <Container>
           <Box>
-            <Button onClick={() => {
-              setEntryExit("entry");
-              navigate("/entry");
-            }}>Nova entrada</Button>
+            <Button
+              onClick={() => {
+                setEntryExit("entry");
+                navigate("/entry");
+              }}
+            >
+              Nova entrada
+            </Button>
           </Box>
           <Box>
-            <Button onClick={() => {
-              setEntryExit("exit");
-              navigate("/entry");
-            }}> Nova saída </Button>
+            <Button
+              onClick={() => {
+                setEntryExit("exit");
+                navigate("/entry");
+              }}
+            >
+              {" "}
+              Nova saída{" "}
+            </Button>
           </Box>
         </Container>
       </Buttons>
     </>
   );
 
-  async function getUserEntries(){
+  async function getUserEntries() {
     const response = await axios.get("http://localhost:5000/entry", config);
     console.log(response);
     setUserEntries(response.data);
     console.log(userEntries);
   }
 
-  async function dropSession(){
-    try{
+  async function dropSession() {
+    try {
       const response = await axios.delete("http://localhost:5000/home", config);
       navigate("/");
-    }catch(error){
+    } catch (error) {
       console.log("Ocorreu um erro ao deslogar o usuário", error);
     }
-    
   }
 }
 
-function Record(props){
-  return(
+function Record(props) {
+  return (
     <>
       <RecordContainer>
         <Date>{props.date}</Date>
         <Description>{props.description}</Description>
-        <Value>{props.value}</Value>
+        <Value type={props.type}>{props.value}</Value>
       </RecordContainer>
-      
     </>
-  )
+  );
 }
-
