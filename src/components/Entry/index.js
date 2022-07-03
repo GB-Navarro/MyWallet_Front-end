@@ -1,4 +1,5 @@
 import { Header, Text, Main, Input, Button } from "./styles";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { useState } from "react";
 import dayjs from "dayjs";
@@ -17,6 +18,8 @@ export default function Entry() {
 
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
+
+  const navigate = useNavigate();
 
   let data = {
     email: emailContext,
@@ -57,11 +60,7 @@ export default function Entry() {
             }}
             required
           ></Input>
-          <Button
-            onClick={() => {
-              console.log(emailContext);
-            }}
-          >
+          <Button type="submit">
             {" "}
             Salvar Entrada{" "}
           </Button>
@@ -74,6 +73,8 @@ export default function Entry() {
     e.preventDefault();
     let isDataSend;
     sendData();
+    console.log(isDataSend);
+    navigate("/home");
   }
 
   async function sendData() {

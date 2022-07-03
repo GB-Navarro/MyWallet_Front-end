@@ -1,38 +1,54 @@
 import { Header, Name, Icon, Main, Records, Button, Box, Buttons, Container, Date, Description, Value, RecordContainer } from "./styles"
+import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TokenContext from "../../contexts/TokenContext";
-import NameContext from "../../contexts/NameContext";
 import EntryExitContext from "../../contexts/EntryExitContext";
+import TokenContext from "../../contexts/TokenContext";
+import EmailContext from "../../contexts/EmailContext";
+import NameContext from "../../contexts/NameContext";
+
 
 export default function Home() {
 
   let navigate = useNavigate();
   let {token} = useContext(TokenContext);
   let {name} = useContext(NameContext);
+  let {email} = useContext(EmailContext);
   let { entryExit, setEntryExit} = useContext(EntryExitContext);
 
-  let [date, setDate] = useState("");
-  let [description, setDescription] = useState("");
-  let [value, setValue] = useState("");
+  let [userEntries, setUserEntries] = useState([]);
+
+  const config = {
+    headers: {
+        Authorization: token
+    }
+  }
 
   return (
     <>
       <Header>
-        <Name> Olá, {name} </Name>
+        <Name onClick={() => getUserEntries()}> Olá, {name} </Name>
         <Icon>
           <ion-icon name="exit-outline"></ion-icon>
         </Icon>
       </Header>
       <Main>
         <Records>
-          <Record date={date} description={description} value={value} type={entryExit}></Record>
-          <Record date={date} description={description} value={value} type={entryExit}></Record>
-          <Record date={date} description={description} value={value} type={entryExit}></Record>
-          <Record date={date} description={description} value={value} type={entryExit}></Record>
-          <Record date={date} description={description} value={value} type={entryExit}></Record>
+          {userEntries.length > 0 ? 
+          userEntries.map((userEntrie) => {
+            return (
+              <>
+                <Record date={userEntrie.date} description={userEntrie.description} value={userEntrie.value} type={entryExit}></Record>
+              </>
+            )
+          })
+          :
+            <>
+              <h1>O usuário não possui entradas</h1>
+            </>
+          }
         </Records>
       </Main>
       <Buttons>
@@ -53,15 +69,22 @@ export default function Home() {
       </Buttons>
     </>
   );
+
+  async function getUserEntries(){
+    const response = await axios.get("http://localhost:5000/entry", config);
+    console.log(response);
+    setUserEntries(response.data);
+    console.log(userEntries);
+  }
 }
 
 function Record(props){
   return(
     <>
       <RecordContainer>
-        <Date>02/07/2022</Date>
-        <Description>Almoço com a gata</Description>
-        <Value>200</Value>
+        <Date>{props.date}</Date>
+        <Description>{props.description}</Description>
+        <Value>{props.value}</Value>
       </RecordContainer>
       
     </>
