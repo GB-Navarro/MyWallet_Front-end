@@ -117,6 +117,7 @@ export const RecordBox = styled.div`
 `
 
 export const Balance = styled.div`
+  
   h1{
     font-family: "Raleway", sans-serif;
     font-weight: 700;
@@ -145,4 +146,5 @@ export const BalanceBox = styled.div`
   justify-content: space-around;
   align-items: flex-end;
   margin-right: 40px;
+  background-color: #FFFFFF;
 `

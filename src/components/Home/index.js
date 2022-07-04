@@ -146,10 +146,10 @@ export default function Home() {
     } catch (error) {
       console.log("Ocorreu um erro ao deslogar o usuário", error);
     }
-  }
+ }
 }
 
-//fazer os ajustes finos do layout (ajustar a styled props das cores das entradas/saídas)
+//ajustar a styled props das cores das entradas/saídas
 //arquiteturar o back e o front end
 //fazer o deploy do back end e do banco de dados
 
