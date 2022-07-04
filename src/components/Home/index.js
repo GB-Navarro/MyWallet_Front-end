@@ -44,7 +44,7 @@ export default function Home() {
     },
   };
   useEffect(() => {
-    const promisse = axios.get("http://localhost:5000/entry", config);
+    const promisse = axios.get("https://fullstack-driven-mywallet.herokuapp.com/entry", config);
     promisse.then((response) => {
       setUserEntries(response.data.userEntries);
       setBalance(response.data.balance);
@@ -141,7 +141,7 @@ export default function Home() {
 
   async function dropSession() {
     try {
-      await axios.delete("http://localhost:5000/home", config);
+      await axios.delete("https://fullstack-driven-mywallet.herokuapp.com/home", config);
       navigate("/");
     } catch (error) {
       console.log("Ocorreu um erro ao deslogar o usuário", error);

@@ -78,7 +78,7 @@ export default function Entry() {
   }
 
   async function sendData() {
-    const URL = "http://localhost:5000/entry";
+    const URL = "https://fullstack-driven-mywallet.herokuapp.com/entry";
     let promisse = axios.post(URL, data, config);
     promisse.then((response) => {
         console.log(response);

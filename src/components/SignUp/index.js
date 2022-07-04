@@ -91,7 +91,7 @@ async function userRegister(event) {
 }
 
 async function sendUserRegisterData(){
-    const URL = "http://localhost:5000/sign-up";
+    const URL = "https://fullstack-driven-mywallet.herokuapp.com/sign-up";
     let userIsCreated;
     try{
       let response = await axios.post(URL, registrationData);
